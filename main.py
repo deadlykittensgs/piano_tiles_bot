@@ -2,15 +2,9 @@ import pyautogui
 import time
 from pynput import keyboard
 import mss
+from PIL import ImageGrab
 
 
-# Variables 
-positions = [
-{"x": 240, "y": 750},
-{"x": 313, "y": 750},
-{"x": 435, "y": 750},
-{"x": 536, "y": 750}
-]
 
 target_color = (22, 43, 86) 
 running = True
@@ -27,26 +21,26 @@ def on_press(key):
     except:
         pass
 
+
+
+
 # start a listener to run function on press  
 listener = keyboard.Listener(on_press=on_press)
-listener.start()
+listener.start() 
 
-
-# run a loop checking a single pixel to see if the color matches the target color
-with mss.mss() as sct:
+with mss.mss() as sct: 
     while running:
-        clicked = False
-        for pos in positions:
-            monitor = {"top": pos["y"], "left": pos["x"], "width": 1, "height": 1}
-            img = sct.grab(monitor)
-            pixel = img.pixel(0, 0)
+        pixel_One = sct.grab({"top": 550, "left": 240, "width": 1, "height": 1}).pixel(0, 0)
+        pixel_Two = sct.grab({"top": 550, "left": 313, "width": 1, "height": 1}).pixel(0, 0)
+        pixel_Three = sct.grab({"top": 550, "left": 435, "width": 1, "height": 1}).pixel(0, 0)
+        pixel_Four = sct.grab({"top": 550, "left": 536, "width": 1, "height": 1}).pixel(0, 0)
+        if pixel_One == target_color:
+            pyautogui.click(240, 550)
+        if pixel_Two == target_color:
+            pyautogui.click(313, 550)
+        if pixel_Three == target_color:
+            pyautogui.click(435, 550)
+        if pixel_Four == target_color:
+            pyautogui.click(536, 550)
 
-            if pixel[:4] == target_color[:4]:  # Compare RGB only
-                pyautogui.click(pos["x"], pos["y"])
-                print(f"Clicked at ({pos['x']}, {pos['y']})!")
-                clicked = True
-        
-
-        if not clicked:
-            print("Waiting...")
-            time.sleep(0.01)
+        time.sleep(0.01)

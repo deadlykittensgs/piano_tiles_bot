@@ -9,6 +9,8 @@ for each if the pixel is dark click that pixel
 else run a while loop that re checks
 
 
+bones started now need to troubleshoot 
+
 
 
 https://lagged.com/en/g/piano-tiles-3#goog_game_inter
